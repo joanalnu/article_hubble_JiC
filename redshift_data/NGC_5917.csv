@@ -1,0 +1,11 @@
+No.,Frequency Targeted,Published Velocity,Published Velocity Uncertainty,Published Redshift,Published Redshift Uncertainty,Refcode,Name in publication,Published RA,Published Dec,Published Equinox,Unc. Significance,Spectral Range,Spectrograph,Measurement Mode Features,Measurement Mode Technique,Spatial Mode,Epoch,Reference Frame,Apex,Longitude of the Apex,Latitude of the Apex,Apex Coordinate System,Qualifiers,Comments
+0,,1914,2,0.006384,7.00E-06,2017A&A...599A.104T,NGC 5917,,,,,,,,,,,,,,,,,
+1,,1914,2,0.006384,7.00E-06,2017A&A...599A.104T,,,,,uncertainty,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+2,Optical,1903,36,0.006348,1.20E-04,1992AJ....103...11F,NGC 5917,151848,-71200,B1950,uncertainty,Optical,Long-slit spectrum,,Cross-correlation fit to template spectrum,Redshift is for nucleus only,,Heliocentric velocity or redshift,,,,,"From new, raw data",
+3,Optical,1904,36,0.006351,1.20E-04,1992ApJS...83...29S,IRAS  15188-0711,151851.7,-71153,B1950,estimated error,Optical,Long-slit spectrum,Emission lines,Individual line fitting,Redshift is systemic,,Heliocentric velocity or redshift,,,,,"From new, raw data",
+4,,1904,,0.00635,,2014ApJS..210....9B,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+5,,1904,,0.006351,,2017ApJ...843...16K,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+6,,1904,,0.006351,,2019ApJ...872..134Z,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+7,,1904,,0.006351,,2022ApJ...932...74C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+8,,2679,,0.008935,,2014ApJS..210....9B,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+,,,,0.006645,6.35E-05,,,,,,,,,,,,,,,,,,,

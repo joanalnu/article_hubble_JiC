@@ -1,0 +1,6 @@
+No.,Frequency Targeted,Published Velocity,Published Velocity Uncertainty,Published Redshift,Published Redshift Uncertainty,Refcode,Name in publication,Published RA,Published Dec,Published Equinox,Unc. Significance,Spectral Range,Spectrograph,Measurement Mode Features,Measurement Mode Technique,Spatial Mode,Epoch,Reference Frame,Apex,Longitude of the Apex,Latitude of the Apex,Apex Coordinate System,Qualifiers,Comments
+0,,1067,25,0.003559,8.30E-05,1992CORV..C...0000F,NGC 3447,,,,,,,,,,,,,,,,,
+1,,1067,-299492707,0.003559,-999,1996A&A...310..353G,NGC 3447,,,,uncertainty,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+2,Optical,1067,25,0.003559,8.30E-05,1992CORV..C...0000F,NGC 3447,105043.7,170222,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1971AJ.....76...22F
+3,Optical,965,47,0.003219,1.57E-04,1992CORV..C...0000F,NGC 3447,105043.7,170222,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1962AJ.....67..363M
+,,,,0.003474,-2.50E+02,,,,,,,,,,,,,,,,,,,

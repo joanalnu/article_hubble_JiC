@@ -1,0 +1,26 @@
+No.,Frequency Targeted,Published Velocity,Published Velocity Uncertainty,Published Redshift,Published Redshift Uncertainty,Refcode,Name in publication,Published RA,Published Dec,Published Equinox,Unc. Significance,Spectral Range,Spectrograph,Measurement Mode Features,Measurement Mode Technique,Spatial Mode,Epoch,Reference Frame,Apex,Longitude of the Apex,Latitude of the Apex,Apex Coordinate System,Qualifiers,Comments
+0,,730,2,0.002435,7.00E-06,2004AJ....128...16K,NGC 3621,,,,,,,,,,,,,,,,,
+1,,730,2,0.002435,7.00E-06,2004AJ....128...16K,NGC 3621,,,,uncertainty,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+2,,726,4,0.002422,1.30E-05,2003MNRAS.339..652K,FLASH J111816.77-324848.9,,,,uncertainty,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+3,21-cm HI line,727,5,0.002425,1.70E-05,1991RC3.9.C...0000d,ESO 377- G 037,111551,-323224,B1950,rms uncertainty,Radio,,,,,,Heliocentric velocity or redshift,,,,,Homogenized from new and previously published data,
+4,21-cm,731,5,0.002437,1.70E-05,2006HIPAS.C...0000:,HIPASS J1118-32,111816,-324915,J2000,estimated error,Radio,"Heterodyne receiver(e.g., 21-cm)",1 Emission lines,Mid-point of line profile at 50% lvel,Redshift is systemic,,Heliocentric velocity or redshift,,,,,"From new, raw data",Extended source
+5,Optical,720,45,0.002402,1.50E-04,20096dF...C...0000J,6dF J1118165-324851,111816.48,-324851,J2000,uncertainty,Optical,Fiber-optic feed,Both absorption and emission lines,Cross-correlation fit to template spectrum,Redshift is systemic,,Heliocentric velocity or redshift,,,,,"From new, raw data",
+6,Optical lines,623,47,0.002078,1.57E-04,1991RC3.9.C...0000d,ESO 377- G 037,111551,-323224,B1950,rms uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,Homogenized from new and previously published data,
+7,Optical,587,50,0.001958,1.67E-04,1992CORV..C...0000F,NGC 3621,111551,-323224,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1979AJ.....84.1811d
+8,Optical,670,70,0.002235,2.33E-04,1992CORV..C...0000F,NGC 3621,111551,-323224,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1965MNSSA..24...32E
+9,Optical,990,100,0.003302,3.34E-04,1992CORV..C...0000F,NGC 3621,111551,-323224,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1979Obs....99..130S
+10,,480,,0.0016,,2022MNRAS.510.5102O,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+11,,600,,0.002,,2019MNRAS.482.1618C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+12,,720,,0.002402,,2017ApJ...843...16K,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+13,,720,,0.002402,,2019ApJ...872..134Z,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+14,,727,,0.002425,,2008ApJ...676..184T,PGC 034554,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+15,,730,,0.002434,,2018ApJ...864...40P,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+16,,730,,0.002435,,2013AJ....145..101K,NGC 3621,111816.1,-324842,J2000,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+17,,730,,0.002435,,2016ApJS..226...19F,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+18,,730,,0.002435,,2018A&A...609A..37C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+19,,730,,0.002435,,2018A&A...609A..37C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+20,,730,,0.002435,,2022ApJ...932...74C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+21,,731,,0.002438,,2013AJ....146...86T,NGC 3621,111816.5,-324850.3,J2000,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+22,,731,,0.002438,,2016AJ....152...50T,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+23,,731,,0.002438,,2015MNRAS.447.1531C,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+,,,,0.002370042,1.10E-04,,,,,,,,,,,,,,,,,,,

@@ -1,0 +1,13 @@
+No.,Frequency Targeted,Published Velocity,Published Velocity Uncertainty,Published Redshift,Published Redshift Uncertainty,Refcode,Name in publication,Published RA,Published Dec,Published Equinox,Unc. Significance,Spectral Range,Spectrograph,Measurement Mode Features,Measurement Mode Technique,Spatial Mode,Epoch,Reference Frame,Apex,Longitude of the Apex,Latitude of the Apex,Apex Coordinate System,Qualifiers,Comments
+0,,1466,5,0.00489,1.80E-05,2006HIPAS.C...0000:,NGC 2442,,,,,,,,,,,,,,,,,
+1,21-cm,1466,5,0.00489,1.80E-05,2006HIPAS.C...0000:,HIPASS J0736-69,73611.6,-693243,J2000,estimated error,Radio,"Heterodyne receiver(e.g., 21-cm)",1 Emission lines,Mid-point of line profile at 50% lvel,Redshift is systemic,,Heliocentric velocity or redshift,,,,,"From new, raw data",Confused source
+2,21-cm HI line,1449,7,0.004833,2.30E-05,1991RC3.9.C...0000d,ESO 059- G 008,73633,-692500,B1950,rms uncertainty,Radio,,,,,,Heliocentric velocity or redshift,,,,,Homogenized from new and previously published data,
+3,Optical,1399,9,0.004667,3.00E-05,1992CORV..C...0000F,NGC 2442,73633,-692500,B1950,uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1978AJ.....83..904S
+4,,1467,11,0.004893,3.70E-05,2004AJ....128...16K,NGC 2442,,,,uncertainty,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+5,Optical lines,1399,66,0.004667,2.20E-04,1991RC3.9.C...0000d,ESO 059- G 008,73633,-692500,B1950,rms uncertainty,Optical,,,,,,Heliocentric velocity or redshift,,,,,Homogenized from new and previously published data,
+6,Optical,712,,0.002375,,1992CORV..C...0000F,NGC 2442,73633,-692500,B1950,no unc. reported,Optical,,,,,,Heliocentric velocity or redshift,,,,,From reprocessed raw data,From 1967Obs....87...38C
+7,,1449,,0.004834,,2018ApJ...864...40P,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+8,,1466,,0.00489,,2017ApJ...843...16K,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+9,,1466,,0.00489,,2019ApJ...872..134Z,,,,,no unc. reported,,,,,,,Heliocentric velocity or redshift,,,,,Uncertain origin,
+,,,,0.0045829,5.77E-05,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,,,,,
