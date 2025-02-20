@@ -4,55 +4,31 @@ import numpy as np
 from scipy.odr import ODR, Model, Data
 
 #reading redshift file
-path_redshift = '/Users/j.alcaide/Documents/spectra/redshift.xlsx'
+path_redshift = './redshift_data/redshift.xlsx'
 xw.Book(path_redshift).set_mock_caller()
 wb = xw.Book.caller()
 sheet = wb.sheets[0]
 
-redshift_id = list()
-cell = sheet['A1']
-while cell.value:
-    redshift_id.append(cell.value)
-    cell = cell.offset(1, 0)
+redshift_id, redshift_data, redshift_error, aux_id = [], [], [], []
+id_cell, data_cell, error_cell = sheet['A1'], sheet['B1'], sheet['C1']
+while id_cell.value:
+    redshift_id.append(id_cell.value)
+    redshift_data.append(data_cell.value)
+    redshift_error.append(error_cell.value)
+    id_cell, data_cell, error_cell = id_cell.offset(1, 0), data_cell.offset(1, 0), error_cell.offset(1, 0)
+    aux_id.append(len(redshift_id))
 
-redshift_data = list()
-cell = sheet['B1']
-while cell.value:
-    redshift_data.append(cell.value)
-    cell = cell.offset(1, 0)
-
-aux_id = list()
-for i in range(len(redshift_id)):
-    aux_id.append(i+1)
-
-redshift_error = list()
-cell = sheet['C1']
-while cell.value:
-    redshift_error.append(cell.value)
-    cell = cell.offset(1, 0)
-
-redshift_error_down = list()
-redshift_error_up = list()
-for i in range(len(redshift_error)):
-    redshift_error_down.append(abs(redshift_data[i] - redshift_error[i]))
-    redshift_error_up.append(abs(redshift_data[i] + redshift_error[i]))
+velocities_id = redshift_id
+velocities_data = [data * 299792458 for data in redshift_data]
+velocities_error = [data *299792458 for data in redshift_error]
 
 #for sorting
-sorting_redshift_lists = list(zip(redshift_id, redshift_data, redshift_error_down, redshift_error_up))
+sorting_redshift_lists = list(zip(redshift_id, redshift_data, redshift_error))
 sorted_redshift_lists = sorted(sorting_redshift_lists, key=lambda x: x[1])
 sorted_redshift_id, sorted_redshift_data, sorted_redshift_error_down, sorted_redshift_error_up = zip(*sorted_redshift_lists)
 
-velocities_id = redshift_id
-velocities_data = list()
-velocities_error_down = list()
-velocities_error_up = list()
-for i in range(len(redshift_id)):
-    velocities_data.append(redshift_data[i]*299792458)
-    velocities_error_down.append(redshift_error[i]*299792458) #abs(()*)
-    velocities_error_up.append(redshift_error[i]*299792458)
-
 #for sorting
-sorting_velocities_lists = list(zip(velocities_id, velocities_data, velocities_error_down, velocities_error_up))
+sorting_velocities_lists = list(zip(velocities_id, velocities_data, velocities_error))
 sorted_velocities_lists = sorted(sorting_velocities_lists, key=lambda x: x[1])
 sorted_velocities_id, sorted_velocities_data, sorted_velocities_error_down, sorted_velocities_error_up = zip(*sorted_velocities_lists)
 
@@ -63,7 +39,7 @@ axs[0,0].tick_params(axis='x', rotation=45, labelsize=5)
 axs[0,0].set_ylabel('Redshift')
 axs[0,0].set_title('Galaxy Redshift')
 axs[0,0].grid(True)
-axs[0,0].errorbar(redshift_id, redshift_data, yerr=[redshift_error_down, redshift_error_up], fmt='none', color='gray', capsize=5)
+axs[0,0].errorbar(redshift_id, redshift_data, yerr=redshift_error, fmt='none', color='gray', capsize=5)
 
 axs[0,1].scatter(sorted_redshift_id, sorted_redshift_data)
 axs[0,1].set_xlabel('Galaxy ID')
@@ -79,7 +55,7 @@ axs[1,0].tick_params(axis='x', rotation=45, labelsize=5)
 axs[1,0].set_ylabel('Redshift')
 axs[1,0].set_title("Galaxy velocity")
 axs[1,0].grid(True)
-axs[1,0].errorbar(velocities_id, velocities_data, yerr=[velocities_error_down, velocities_error_up], fmt='none', color='gray', capsize=5)
+axs[1,0].errorbar(velocities_id, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
 
 axs[1,1].scatter(sorted_velocities_id, sorted_velocities_data)
 axs[1,1].set_xlabel('Galaxy ID')
@@ -161,7 +137,7 @@ fig2.savefig(path_distances_fig)
 
 #computing the Hubble Constant 😁
 
-hubble_combined_lists = list(zip(velocities_id, I_gal_id, velocities_data, velocities_error_down, velocities_error_up, V_dis_data, graphic_V_dis_low, graphic_V_dis_high, I_dis_data, graphic_I_dis_low, graphic_I_dis_high))
+hubble_combined_lists = list(zip(velocities_id, I_gal_id, velocities_data, velocities_error, V_dis_data, graphic_V_dis_low, graphic_V_dis_high, I_dis_data, graphic_I_dis_low, graphic_I_dis_high))
 sorted_hubble_lists = sorted(hubble_combined_lists, key=lambda x: x[5])
 sorted_galaxy_id, unuseful_list, sorted_vel_data, sorted_vel_low, sorted_vel_high, sorted_V_dis_data, sorted_V_dis_low, sorted_V_dis_high, sorted_I_dis_data, sorted_I_dis_low, sorted_I_dis_high = zip(*sorted_hubble_lists)
 
@@ -347,27 +323,23 @@ fig_I_distances.savefig('/Users/j.alcaide/Desktop/fig_I_distances.png', dpi=300,
 #redshifts and velocities
 
 this_redshift_data = list()
-this_redshift_error_up = list()
-this_redshift_error_down = list()
+this_redshift_error = list()
 this_velocities_data = list()
-this_velocities_error_up = list()
-this_velocities_error_down = list()
+this_velocities_error = list()
 aux_id.clear()
 for i in range(49):
     aux_id.append(i)
     this_redshift_data.append(redshift_data[i])
-    this_redshift_error_up.append(redshift_error_up[i])
-    this_redshift_error_down.append(redshift_error_down[i])
+    this_redshift_error.append(redshift_error[i])
     this_velocities_data.append(velocities_data[i])
-    this_velocities_error_up.append(velocities_error_up[i])
-    this_velocities_error_down.append(velocities_error_down[i])
+    this_velocities_error.append(velocities_error[i])
 
 fig_redshifts, axs = plt.subplots(1, 1, figsize=(7,7))
 axs.scatter(aux_id, this_redshift_data)
 axs.set_xlabel('Galaxy ID')
 axs.set_ylabel('Redshift')
 axs.grid(True)
-axs.errorbar(aux_id, this_redshift_data, yerr=[this_redshift_error_down, this_redshift_error_up], fmt='none', color='gray', capsize=5)
+axs.errorbar(aux_id, this_redshift_data, yerr=this_redshift_error, fmt='none', color='gray', capsize=5)
 plt.xticks(ticks=np.arange((len(aux_id))), fontsize=4)
 fig_redshifts.savefig('/Users/j.alcaide/Desktop/fig_redshifts.png', dpi=200, bbox_inches='tight')
 
@@ -379,19 +351,18 @@ fig_velocities, axs = plt.subplots(2, 1,  gridspec_kw={'height_ratios': [1, 3]})
 
 for i in range(len(this_velocities_data)):
     this_velocities_data[i] = this_velocities_data[i] / 1000
-    this_velocities_error_down[i] = this_velocities_error_down[i] / 1000
-    this_velocities_error_up[i] = this_velocities_error_up[i] / 1000
+    this_velocities_error[i] = this_velocities_error[i] / 1000
 
 axs[0].scatter(aux_id, this_velocities_data, color="tab:blue")
 axs[0].set_xlabel('Galaxy ID')
 axs[0].set_ylabel('velocities [km/s]  ')
-axs[0].errorbar(aux_id, this_velocities_data, yerr=[this_velocities_error_down, this_velocities_error_up], fmt='none', color='gray', capsize=5)
+axs[0].errorbar(aux_id, this_velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
 axs[0].set_ylim(bottom=2600, top=None, emit=True, auto=False, ymin=None, ymax=None)
 
 axs[1].scatter(aux_id, this_velocities_data, color="tab:blue")
 axs[1].set_xlabel('Galaxy ID')
 axs[1].set_ylabel('velocities [km/s]')
-axs[1].errorbar(aux_id, this_velocities_data, yerr=[this_velocities_error_down, this_velocities_error_up], fmt='none', color='gray', capsize=5)
+axs[1].errorbar(aux_id, this_velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
 axs[1].set_ylim(bottom=-500, top=2600, emit=True, auto=False, ymin=None, ymax=None)
 
 
