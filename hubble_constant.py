@@ -1,6 +1,7 @@
 import xlwings as xw
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.odr import ODR, Model, Data
 
 #reading redshift file
 path_redshift = '/Users/j.alcaide/Documents/spectra/redshift.xlsx'
@@ -217,6 +218,7 @@ for i in range(len(converted_sorted_I_dis_data)):
     converted_sorted_average_dis_low.append((converted_sorted_V_dis_low[i]+converted_sorted_I_dis_low[i])/2)
     converted_sorted_average_dis_high.append((converted_sorted_V_dis_high[i]+converted_sorted_I_dis_high[i])/2)
 
+# compute fit
 x = np.array(converted_sorted_average_dis_data)
 
 converted_sorted_average_dis_low_combined = list()
@@ -233,8 +235,29 @@ y = np.array(converted_sorted_vel_data)
 y_low = np.array(converted_sorted_vel_low)
 y_high = np.array(converted_sorted_vel_high)
 
-slope, intercept = np.polyfit(x, y, 1)
-fit_linear_regression = slope * x + intercept
+# Define the linear model with scripy ODR
+def linear_func(B, x):
+    return B[0] * x + B[1]
+
+data = Data(x, y) #, wd=1/np.array(distances_error))
+model = Model(linear_func)
+
+# run fitting
+odr = ODR(data, model, beta0=[1, 0])
+output = odr.run()
+
+# Extract results
+H0 = output.beta[0]
+H0_err = output.sd_beta[0]
+intercept = output.beta[1]
+print(f'Hubble constant = {H0:.2f} ± {H0_err:.2f}')
+
+fit_linear_regression = H0 * np.array(x) + intercept
+fit_low = (H0-H0_err) * np.array(x) + intercept
+fit_high = (H0+H0_err) * np.array(x) + intercept
+
+
+
 
 
 
@@ -250,10 +273,6 @@ std_error_slope = np.sqrt(mse / variance)
 
 
 
-print('slope:', slope)
-print('error: ', std_error_slope)
-print('intercept:', intercept)
-print(slope+intercept)
 xmin, xmax = plt.xlim()
 ymin, ymax = plt.ylim()
 
