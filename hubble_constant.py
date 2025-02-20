@@ -25,12 +25,12 @@ velocities_error = [data *299792458 for data in redshift_error]
 #for sorting
 sorting_redshift_lists = list(zip(redshift_id, redshift_data, redshift_error))
 sorted_redshift_lists = sorted(sorting_redshift_lists, key=lambda x: x[1])
-sorted_redshift_id, sorted_redshift_data, sorted_redshift_error_down, sorted_redshift_error_up = zip(*sorted_redshift_lists)
+sorted_redshift_id, sorted_redshift_data, sorted_redshift_error = zip(*sorted_redshift_lists)
 
 #for sorting
 sorting_velocities_lists = list(zip(velocities_id, velocities_data, velocities_error))
 sorted_velocities_lists = sorted(sorting_velocities_lists, key=lambda x: x[1])
-sorted_velocities_id, sorted_velocities_data, sorted_velocities_error_down, sorted_velocities_error_up = zip(*sorted_velocities_lists)
+sorted_velocities_id, sorted_velocities_data, sorted_velocities_error = zip(*sorted_velocities_lists)
 
 fig1, axs = plt.subplots(2, 2, figsize=(12, 13))
 axs[0,0].scatter(redshift_id, redshift_data)
@@ -47,7 +47,7 @@ axs[0,1].tick_params(axis='x', rotation=45, labelsize=5)
 axs[0,1].set_ylabel('Redshift')
 axs[0,1].set_title("Galaxy Redshift sorted")
 axs[0,1].grid(True)
-axs[0,1].errorbar(sorted_redshift_id, sorted_redshift_data, yerr=[sorted_redshift_error_down, sorted_redshift_error_up], fmt='none', color='gray', capsize=5)
+axs[0,1].errorbar(sorted_redshift_id, sorted_redshift_data, yerr=sorted_redshift_error, fmt='none', color='gray', capsize=5)
 
 axs[1,0].scatter(velocities_id, velocities_data)
 axs[1,0].set_xlabel('Galaxy ID')
@@ -63,14 +63,14 @@ axs[1,1].tick_params(axis='x', rotation=45, labelsize=5)
 axs[1,1].set_ylabel('Redshift')
 axs[1,1].set_title("Galaxy velocity sorted")
 axs[1,1].grid(True)
-axs[1,1].errorbar(sorted_velocities_id, sorted_velocities_data, yerr=[sorted_velocities_error_down, sorted_velocities_error_up], fmt='none', color='gray', capsize=5)
+axs[1,1].errorbar(sorted_velocities_id, sorted_velocities_data, yerr=sorted_velocities_error, fmt='none', color='gray', capsize=5)
 
 path_velocities_fig = './figures/velocities_fig1.png'
 fig1.savefig(path_velocities_fig)
 
 # read cepheid distance data
 V_gal_id, V_data, V_error = [], [], []
-with open('./00_V_distances.txt', 'r') as f:
+with open('./cepheid_data/00_V_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
@@ -82,7 +82,7 @@ for line in lines:
         V_error.append(error)
 
 I_gal_id, I_data, I_error = [], [], []
-with open ('./00_I_distances.txt', 'r') as f:
+with open ('./cepheid_data/00_I_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
