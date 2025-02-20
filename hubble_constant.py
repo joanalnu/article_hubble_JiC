@@ -68,68 +68,48 @@ axs[1,1].errorbar(sorted_velocities_id, sorted_velocities_data, yerr=[sorted_vel
 path_velocities_fig = '/Users/j.alcaide/Desktop/velocities_fig1.png'
 fig1.savefig(path_velocities_fig)
 
-
-
-V_gal_id = list()
-V_dis_data = list()
-V_dis_low = list()
-V_dis_high = list()
-graphic_V_dis_low = list()
-graphic_V_dis_high = list()
-with open('/Users/j.alcaide/Documents/cepheid/V_distances.txt','r') as file:
-    lines = file.readlines()
+# read cepheid distance data
+V_gal_id, V_data, V_error = [], [], []
+with open('./V_distances.txt', 'r') as f:
+    lines = f.readlines()
 
 for line in lines:
     data = line.split()
     if len(data) == 4:
         V_gal_id.append(data[0])
-        V_dis_data.append(float(data[1]))
-        V_dis_low.append(float(data[1])-float(data[2]))
-        graphic_V_dis_low.append(float(data[2]))
-        V_dis_high.append(float(data[1])-float(data[3]))
-        graphic_V_dis_high.append(float(data[3]))
-    else:
-        continue
+        V_data.append(float(data[1]))
+        error = float(data[1]) - float(data[2])
+        V_error.append(error)
 
+I_gal_id, I_data, I_error = [], [], []
+with open ('./I_distances.txt', 'r') as f:
+    lines = f.readlines()
 
-I_gal_id = list()
-I_dis_data = list()
-I_dis_low = list()
-I_dis_high = list()
-graphic_I_dis_low = list()
-graphic_I_dis_high = list()
-with open('/Users/j.alcaide/Documents/cepheid/I_distances.txt','r') as file:
-    lines = file.readlines()
-
-for line in lines: 
+for line in lines:
     data = line.split()
-    if len(data) == 4:
+    if len(data)==4:
         I_gal_id.append(data[0])
-        I_dis_data.append(float(data[1]))
-        I_dis_low.append(float(data[1])-float(data[2]))
-        graphic_I_dis_low.append(float(data[2]))
-        I_dis_high.append(float(data[1])-float(data[3]))
-        graphic_I_dis_high.append(float(data[3]))
-    else:
-        continue
+        I_data.append(float(data[1]))
+        error = float(data[1]) - float(data[2])
+        I_error.append(error)
 
 
 fig2, axs = plt.subplots(1, 2, figsize=(12,13))
-axs[0].scatter(V_gal_id, V_dis_data)
+axs[0].scatter(V_gal_id, V_data)
 axs[0].set_xlabel('Galaxy ID')
 axs[0].tick_params(axis='x', rotation=45, labelsize=5)
 axs[0].set_ylabel('V_distance')
 axs[0].set_title('Galaxy distances V')
 axs[0].grid(True)
-axs[0].errorbar(V_gal_id, V_dis_data, yerr=[V_dis_low, V_dis_high], fmt='none', color='gray', capsize=5)
+axs[0].errorbar(V_gal_id, V_data, yerr=V_error, fmt='none', color='gray', capsize=5)
 
-axs[1].scatter(I_gal_id, I_dis_data)
+axs[1].scatter(I_gal_id, I_data)
 axs[1].set_xlabel('Galaxy ID')
 axs[1].tick_params(axis='x', rotation=45, labelsize=5)
 axs[1].set_ylabel('I_distance')
 axs[1].set_title("Galaxy distances I")
 axs[1].grid(True)
-axs[1].errorbar(I_gal_id, I_dis_data, yerr=[I_dis_low, I_dis_high], fmt='none', color='gray', capsize=5)
+axs[1].errorbar(I_gal_id, I_data, yerr=I_error, fmt='none', color='gray', capsize=5)
 
 path_distances_fig = '/Users/j.alcaide/Desktop/distances_fig2.png'
 fig2.savefig(path_distances_fig)
@@ -137,9 +117,9 @@ fig2.savefig(path_distances_fig)
 
 #computing the Hubble Constant 😁
 
-hubble_combined_lists = list(zip(velocities_id, I_gal_id, velocities_data, velocities_error, V_dis_data, graphic_V_dis_low, graphic_V_dis_high, I_dis_data, graphic_I_dis_low, graphic_I_dis_high))
+hubble_combined_lists = list(zip(velocities_id, I_gal_id, velocities_data, velocities_error, V_data, V_error, I_data, I_error))
 sorted_hubble_lists = sorted(hubble_combined_lists, key=lambda x: x[5])
-sorted_galaxy_id, unuseful_list, sorted_vel_data, sorted_vel_low, sorted_vel_high, sorted_V_dis_data, sorted_V_dis_low, sorted_V_dis_high, sorted_I_dis_data, sorted_I_dis_low, sorted_I_dis_high = zip(*sorted_hubble_lists)
+sorted_galaxy_id, unuseful_list, sorted_vel_data, sorted_vel_low, sorted_vel_high, sorted_V_data, sorted_V_dis_low, sorted_V_dis_high, sorted_I_data, sorted_I_dis_low, sorted_I_dis_high = zip(*sorted_hubble_lists)
 
 #convert pc -> Mpc and m/s -> KM/s
 converted_sorted_vel_data = list()
@@ -150,47 +130,47 @@ for i in range(len(sorted_vel_data)):
     converted_sorted_vel_low.append(sorted_vel_low[i] / 1000)
     converted_sorted_vel_high.append(sorted_vel_high[i] / 1000)
 
-converted_sorted_V_dis_data = list()
+converted_sorted_V_data = list()
 converted_sorted_V_dis_low = list()
 converted_sorted_V_dis_high = list()
-for i in range(len(sorted_V_dis_data)):
-    converted_sorted_V_dis_data.append(sorted_V_dis_data[i] / 1000000) #pc -> Mpc
+for i in range(len(sorted_V_data)):
+    converted_sorted_V_data.append(sorted_V_data[i] / 1000000) #pc -> Mpc
     converted_sorted = abs(sorted_V_dis_low[i] / 1000000)
-    converted_sorted_V_dis_low.append(converted_sorted_V_dis_data[i] - converted_sorted)
+    converted_sorted_V_dis_low.append(converted_sorted_V_data[i] - converted_sorted)
     converted_sorted = abs(sorted_V_dis_high[i] / 1000000)
-    converted_sorted_V_dis_high.append(converted_sorted_V_dis_data[i] - converted_sorted)
+    converted_sorted_V_dis_high.append(converted_sorted_V_data[i] - converted_sorted)
 
-converted_sorted_I_dis_data = list()
+converted_sorted_I_data = list()
 converted_sorted_I_dis_low = list()
 converted_sorted_I_dis_high = list()
-for i in range(len(sorted_I_dis_data)):
-    converted_sorted_I_dis_data.append(sorted_I_dis_data[i] / 1000000) #pc -> Mpc
+for i in range(len(sorted_I_data)):
+    converted_sorted_I_data.append(sorted_I_data[i] / 1000000) #pc -> Mpc
     converted_sorted = abs(sorted_I_dis_low[i] / 1000000)
-    converted_sorted_I_dis_low.append(converted_sorted_I_dis_data[i] - converted_sorted)
+    converted_sorted_I_dis_low.append(converted_sorted_I_data[i] - converted_sorted)
     converted_sorted = abs(sorted_I_dis_high[i] / 1000000)
-    converted_sorted_I_dis_high.append(converted_sorted_I_dis_data[i] - converted_sorted)
+    converted_sorted_I_dis_high.append(converted_sorted_I_data[i] - converted_sorted)
 
 
 fig3, ax = plt.subplots(1, 1, figsize=(18, 20))
-ax.scatter(converted_sorted_V_dis_data, converted_sorted_vel_data, marker='x')
+ax.scatter(converted_sorted_V_data, converted_sorted_vel_data, marker='x')
 ax.set_xlabel('Distances [Mpc]')
 ax.set_ylabel('Velocities km/s')
 ax.set_title('Hubble Diagram')
 ax.grid(True)
 
-ax.errorbar(converted_sorted_V_dis_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
-ax.errorbar(converted_sorted_V_dis_data, converted_sorted_vel_data, xerr=[converted_sorted_V_dis_low, converted_sorted_V_dis_high], fmt='none', color='blue', capsize=5)
+ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
+ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, xerr=[converted_sorted_V_dis_low, converted_sorted_V_dis_high], fmt='none', color='blue', capsize=5)
 
 
-ax.scatter(converted_sorted_I_dis_data, converted_sorted_vel_data, color='green', marker='x')
-ax.errorbar(converted_sorted_I_dis_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
-ax.errorbar(converted_sorted_I_dis_data, converted_sorted_vel_data, xerr=[converted_sorted_I_dis_low, converted_sorted_I_dis_high], fmt='none', color='green', capsize=5)
+ax.scatter(converted_sorted_I_data, converted_sorted_vel_data, color='green', marker='x')
+ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
+ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, xerr=[converted_sorted_I_dis_low, converted_sorted_I_dis_high], fmt='none', color='green', capsize=5)
 
 converted_sorted_average_dis_data = list() #average between V and I
 converted_sorted_average_dis_low = list()
 converted_sorted_average_dis_high = list()
-for i in range(len(converted_sorted_I_dis_data)):
-    converted_sorted_average_dis_data.append((converted_sorted_V_dis_data[i]+converted_sorted_I_dis_data[i])/2)
+for i in range(len(converted_sorted_I_data)):
+    converted_sorted_average_dis_data.append((converted_sorted_V_data[i]+converted_sorted_I_data[i])/2)
     converted_sorted_average_dis_low.append((converted_sorted_V_dis_low[i]+converted_sorted_I_dis_low[i])/2)
     converted_sorted_average_dis_high.append((converted_sorted_V_dis_high[i]+converted_sorted_I_dis_high[i])/2)
 
@@ -287,34 +267,31 @@ for i in range(len(aux_id)):
 
 #distances
     
-for i in range(len(V_dis_data)):
-    V_dis_data[i] = V_dis_data[i] / 1000
-    V_dis_low[i] = V_dis_low[i] / 1000
-    V_dis_high[i] = V_dis_high[i] / 1000
-
-    I_dis_data[i] = I_dis_data[i] / 1000
-    I_dis_low[i] = I_dis_low[i] / 1000
-    I_dis_high[i] = I_dis_high[i] / 1000
+for i in range(len(V_data)):
+    V_data[i] = V_data[i] / 1000
+    V_error[i] = V_error[i] / 1000
+    I_data[i] = I_data[i] / 1000
+    I_error[i] = I_error[i] / 1000
 
 
 function_aux_id(V_gal_id)
 fig_V_distances, axs = plt.subplots(1, 1, figsize=(10,9))
-axs.scatter(aux_id, V_dis_data)
+axs.scatter(aux_id, V_data)
 axs.set_xlabel('Galaxy ID')
 axs.set_ylabel('distance V band [kpc]')
 axs.grid(False)
-axs.errorbar(aux_id, V_dis_data, yerr=[V_dis_low, V_dis_high], fmt='none', color='gray', capsize=5)
+axs.errorbar(aux_id, V_data, yerr=V_error, fmt='none', color='gray', capsize=5)
 
 fig_V_distances.savefig('/Users/j.alcaide/Desktop/fig_V_distances.png', dpi=300, bbox_inches='tight')
 
 
 fig_I_distances, axs = plt.subplots(1, 1, figsize=(10,9))
 function_aux_id(I_gal_id)
-axs.scatter(aux_id, I_dis_data)
+axs.scatter(aux_id, I_data)
 axs.set_xlabel('Galaxy ID')
 axs.set_ylabel('distance I band [kpc]')
 axs.grid(False)
-axs.errorbar(aux_id, I_dis_data, yerr=[I_dis_low, I_dis_high], fmt='none', color='gray', capsize=5)
+axs.errorbar(aux_id, I_data, yerr=I_error, fmt='none', color='gray', capsize=5)
 
 fig_I_distances.savefig('/Users/j.alcaide/Desktop/fig_I_distances.png', dpi=300, bbox_inches='tight')
 
