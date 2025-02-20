@@ -289,7 +289,7 @@ this_redshift_error = list()
 this_velocities_data = list()
 this_velocities_error = list()
 aux_id.clear()
-for i in range(49):
+for i in range(len(V_gal_id)):
     aux_id.append(i)
     this_redshift_data.append(redshift_data[i])
     this_redshift_error.append(redshift_error[i])
@@ -330,9 +330,3 @@ axs[1].set_ylim(bottom=-500, top=2600, emit=True, auto=False, ymin=None, ymax=No
 
 fig_velocities.tight_layout()
 fig_velocities.savefig('./figures/fig_velocities.png', dpi=200, bbox_inches='tight')
-
-
-path_redshift = '/Users/j.alcaide/Documents/Table_galaxy_sample_overleaf.xlsx'
-xw.Book(path_redshift).set_mock_caller()
-wb = xw.Book.caller()
-sheet = wb.sheets[0]
