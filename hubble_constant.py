@@ -4,7 +4,7 @@ import numpy as np
 from scipy.odr import ODR, Model, Data
 
 #reading redshift file
-path_redshift = './redshift_data/redshift.xlsx'
+path_redshift = './redshift_data/00_redshift.xlsx'
 xw.Book(path_redshift).set_mock_caller()
 wb = xw.Book.caller()
 sheet = wb.sheets[0]
@@ -65,12 +65,12 @@ axs[1,1].set_title("Galaxy velocity sorted")
 axs[1,1].grid(True)
 axs[1,1].errorbar(sorted_velocities_id, sorted_velocities_data, yerr=[sorted_velocities_error_down, sorted_velocities_error_up], fmt='none', color='gray', capsize=5)
 
-path_velocities_fig = '/Users/j.alcaide/Desktop/velocities_fig1.png'
+path_velocities_fig = './figures/velocities_fig1.png'
 fig1.savefig(path_velocities_fig)
 
 # read cepheid distance data
 V_gal_id, V_data, V_error = [], [], []
-with open('./V_distances.txt', 'r') as f:
+with open('./00_V_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
@@ -82,7 +82,7 @@ for line in lines:
         V_error.append(error)
 
 I_gal_id, I_data, I_error = [], [], []
-with open ('./I_distances.txt', 'r') as f:
+with open ('./00_I_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
@@ -111,7 +111,7 @@ axs[1].set_title("Galaxy distances I")
 axs[1].grid(True)
 axs[1].errorbar(I_gal_id, I_data, yerr=I_error, fmt='none', color='gray', capsize=5)
 
-path_distances_fig = '/Users/j.alcaide/Desktop/distances_fig2.png'
+path_distances_fig = './figures/distances_fig2.png'
 fig2.savefig(path_distances_fig)
 
 
@@ -234,7 +234,7 @@ ymin, ymax = plt.ylim()
 
 plt.text(xmax * 0.95, ymax * 0.98, fontsize=20, ha='right', va='top')
 
-fig3.savefig('/Users/j.alcaide/Desktop/hubble_diagram.png', dpi=500, bbox_inches='tight')
+fig3.savefig('./figures/hubble_diagram.png', dpi=500, bbox_inches='tight')
 
 
 #####################################################################################################################
@@ -260,7 +260,7 @@ ax.errorbar(converted_sorted_average_dis_data, converted_sorted_vel_data, xerr=[
 
 ax.plot(x, fit_linear_regression, color='red')
 
-fig_hubble.savefig('/Users/j.alcaide/Desktop/fig_hubble.png', dpi=500, bbox_inches='tight')
+fig_hubble.savefig('./figures/fig_hubble.png', dpi=500, bbox_inches='tight')
 
 for i in range(len(aux_id)):
     aux_id[i] += 1
@@ -282,7 +282,7 @@ axs.set_ylabel('distance V band [kpc]')
 axs.grid(False)
 axs.errorbar(aux_id, V_data, yerr=V_error, fmt='none', color='gray', capsize=5)
 
-fig_V_distances.savefig('/Users/j.alcaide/Desktop/fig_V_distances.png', dpi=300, bbox_inches='tight')
+fig_V_distances.savefig('./figures/fig_V_distances.png', dpi=300, bbox_inches='tight')
 
 
 fig_I_distances, axs = plt.subplots(1, 1, figsize=(10,9))
@@ -293,7 +293,7 @@ axs.set_ylabel('distance I band [kpc]')
 axs.grid(False)
 axs.errorbar(aux_id, I_data, yerr=I_error, fmt='none', color='gray', capsize=5)
 
-fig_I_distances.savefig('/Users/j.alcaide/Desktop/fig_I_distances.png', dpi=300, bbox_inches='tight')
+fig_I_distances.savefig('./figures/fig_I_distances.png', dpi=300, bbox_inches='tight')
 
 
 
@@ -318,7 +318,7 @@ axs.set_ylabel('Redshift')
 axs.grid(True)
 axs.errorbar(aux_id, this_redshift_data, yerr=this_redshift_error, fmt='none', color='gray', capsize=5)
 plt.xticks(ticks=np.arange((len(aux_id))), fontsize=4)
-fig_redshifts.savefig('/Users/j.alcaide/Desktop/fig_redshifts.png', dpi=200, bbox_inches='tight')
+fig_redshifts.savefig('./figures/fig_redshifts.png', dpi=200, bbox_inches='tight')
 
 for i in range(len(aux_id)):
     aux_id[i]+=1
@@ -344,7 +344,7 @@ axs[1].set_ylim(bottom=-500, top=2600, emit=True, auto=False, ymin=None, ymax=No
 
 
 fig_velocities.tight_layout()
-fig_velocities.savefig('/Users/j.alcaide/Desktop/fig_velocities.png', dpi=200, bbox_inches='tight')
+fig_velocities.savefig('./figures/fig_velocities.png', dpi=200, bbox_inches='tight')
 
 
 path_redshift = '/Users/j.alcaide/Documents/Table_galaxy_sample_overleaf.xlsx'

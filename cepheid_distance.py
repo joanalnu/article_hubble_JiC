@@ -254,7 +254,7 @@ sheet['H8'].value = min(d_I_data)#
 sheet['G9'].value = 'highest d [pc]'
 sheet['H9'].value = max(d_I_data)#
 
-with open('/Users/j.alcaide/Documents/cepheid/V_distances.txt', 'a') as file:
+with open('/Users/j.alcaide/Documents/cepheid/00_V_distances.txt', 'a') as file:
     file.write(file_name)
     file.write(' ')
     file.write(str((sum_V/len(d_V_data))))
@@ -264,7 +264,7 @@ with open('/Users/j.alcaide/Documents/cepheid/V_distances.txt', 'a') as file:
     file.write(str(min(d_V_data)))
     file.write('\n')
 
-with open('/Users/j.alcaide/Documents/cepheid/I_distances.txt', 'a') as file:#
+with open('/Users/j.alcaide/Documents/cepheid/00_I_distances.txt', 'a') as file:#
     file.write(file_name)#
     file.write(' ')#
     file.write(str((sum_I/len(d_I_data))))#
