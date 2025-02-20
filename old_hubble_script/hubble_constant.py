@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 #reading redshift file
-path_redshift = '/Users/j.alcaide/Documents/spectra/redshift.xlsx'
+path_redshift = '/Users/j.alcaide/Documents/spectra/00_redshift.xlsx'
 xw.Book(path_redshift).set_mock_caller()
 wb = xw.Book.caller()
 sheet = wb.sheets[0]
@@ -99,7 +99,7 @@ V_dis_low = list()
 V_dis_high = list()
 graphic_V_dis_low = list()
 graphic_V_dis_high = list()
-with open('/Users/j.alcaide/Documents/cepheid/V_distances.txt','r') as file:
+with open('/Users/j.alcaide/Documents/cepheid/00_V_distances.txt','r') as file:
     lines = file.readlines()
 
 for line in lines:
@@ -121,7 +121,7 @@ I_dis_low = list()
 I_dis_high = list()
 graphic_I_dis_low = list()
 graphic_I_dis_high = list()
-with open('/Users/j.alcaide/Documents/cepheid/I_distances.txt','r') as file:
+with open('/Users/j.alcaide/Documents/cepheid/00_I_distances.txt','r') as file:
     lines = file.readlines()
 
 for line in lines: 
