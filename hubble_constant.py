@@ -119,36 +119,28 @@ fig2.savefig(path_distances_fig)
 
 hubble_combined_lists = list(zip(velocities_id, I_gal_id, velocities_data, velocities_error, V_data, V_error, I_data, I_error))
 sorted_hubble_lists = sorted(hubble_combined_lists, key=lambda x: x[5])
-sorted_galaxy_id, unuseful_list, sorted_vel_data, sorted_vel_low, sorted_vel_high, sorted_V_data, sorted_V_dis_low, sorted_V_dis_high, sorted_I_data, sorted_I_dis_low, sorted_I_dis_high = zip(*sorted_hubble_lists)
+sorted_galaxy_id, unuseful_list, sorted_vel_data, sorted_vel_error, sorted_V_data, sorted_V_error, sorted_I_data, sorted_I_error = zip(*sorted_hubble_lists)
 
 #convert pc -> Mpc and m/s -> KM/s
 converted_sorted_vel_data = list()
-converted_sorted_vel_low = list()
-converted_sorted_vel_high = list()
+converted_sorted_vel_error = list()
 for i in range(len(sorted_vel_data)):
     converted_sorted_vel_data.append(sorted_vel_data[i] / 1000) #m/s -> km/s
-    converted_sorted_vel_low.append(sorted_vel_low[i] / 1000)
-    converted_sorted_vel_high.append(sorted_vel_high[i] / 1000)
+    converted_sorted_vel_error.append(sorted_vel_error[i] / 1000)
 
 converted_sorted_V_data = list()
-converted_sorted_V_dis_low = list()
-converted_sorted_V_dis_high = list()
+converted_sorted_V_error = list()
 for i in range(len(sorted_V_data)):
     converted_sorted_V_data.append(sorted_V_data[i] / 1000000) #pc -> Mpc
-    converted_sorted = abs(sorted_V_dis_low[i] / 1000000)
-    converted_sorted_V_dis_low.append(converted_sorted_V_data[i] - converted_sorted)
-    converted_sorted = abs(sorted_V_dis_high[i] / 1000000)
-    converted_sorted_V_dis_high.append(converted_sorted_V_data[i] - converted_sorted)
+    converted_sorted = abs(sorted_V_error[i] / 1000000)
+    converted_sorted_V_error.append(converted_sorted_V_data[i] - converted_sorted)
 
 converted_sorted_I_data = list()
-converted_sorted_I_dis_low = list()
-converted_sorted_I_dis_high = list()
+converted_sorted_I_error = list()
 for i in range(len(sorted_I_data)):
     converted_sorted_I_data.append(sorted_I_data[i] / 1000000) #pc -> Mpc
-    converted_sorted = abs(sorted_I_dis_low[i] / 1000000)
-    converted_sorted_I_dis_low.append(converted_sorted_I_data[i] - converted_sorted)
-    converted_sorted = abs(sorted_I_dis_high[i] / 1000000)
-    converted_sorted_I_dis_high.append(converted_sorted_I_data[i] - converted_sorted)
+    converted_sorted = abs(sorted_I_error[i] / 1000000)
+    converted_sorted_I_error.append(converted_sorted_I_data[i] - converted_sorted)
 
 
 fig3, ax = plt.subplots(1, 1, figsize=(18, 20))
@@ -158,44 +150,37 @@ ax.set_ylabel('Velocities km/s')
 ax.set_title('Hubble Diagram')
 ax.grid(True)
 
-ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
-ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, xerr=[converted_sorted_V_dis_low, converted_sorted_V_dis_high], fmt='none', color='blue', capsize=5)
+ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, yerr=converted_sorted_vel_error, fmt='none', color='red', capsize=5)
+ax.errorbar(converted_sorted_V_data, converted_sorted_vel_data, xerr=converted_sorted_V_error, fmt='none', color='blue', capsize=5)
 
 
 ax.scatter(converted_sorted_I_data, converted_sorted_vel_data, color='green', marker='x')
-ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='red', capsize=5)
-ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, xerr=[converted_sorted_I_dis_low, converted_sorted_I_dis_high], fmt='none', color='green', capsize=5)
+ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, yerr=converted_sorted_vel_error, fmt='none', color='red', capsize=5)
+ax.errorbar(converted_sorted_I_data, converted_sorted_vel_data, xerr=converted_sorted_I_error, fmt='none', color='green', capsize=5)
 
 converted_sorted_average_dis_data = list() #average between V and I
-converted_sorted_average_dis_low = list()
-converted_sorted_average_dis_high = list()
+converted_sorted_average_dis_error = list()
 for i in range(len(converted_sorted_I_data)):
     converted_sorted_average_dis_data.append((converted_sorted_V_data[i]+converted_sorted_I_data[i])/2)
-    converted_sorted_average_dis_low.append((converted_sorted_V_dis_low[i]+converted_sorted_I_dis_low[i])/2)
-    converted_sorted_average_dis_high.append((converted_sorted_V_dis_high[i]+converted_sorted_I_dis_high[i])/2)
+    converted_sorted_average_dis_error.append((converted_sorted_V_error[i]+converted_sorted_I_error[i])/2)
 
 # compute fit
 x = np.array(converted_sorted_average_dis_data)
 
 converted_sorted_average_dis_low_combined = list()
-for i in range(len(converted_sorted_average_dis_low)):
-    converted_sorted_average_dis_low_combined.append(converted_sorted_average_dis_data[i]+converted_sorted_average_dis_low[i])
-x_low = np.array(converted_sorted_average_dis_low_combined)
+for i in range(len(converted_sorted_average_dis_error)):
+    converted_sorted_average_dis_low_combined.append(converted_sorted_average_dis_data[i]+converted_sorted_average_dis_error[i])
+x_error = np.array(converted_sorted_average_dis_low_combined)
 
-converted_sorted_average_dis_high_combined = list()
-for i in range(len(converted_sorted_average_dis_high)):
-    converted_sorted_average_dis_high_combined.append(converted_sorted_average_dis_data[i]+converted_sorted_average_dis_high[i])
-x_high = np.array(converted_sorted_average_dis_high_combined)
 
 y = np.array(converted_sorted_vel_data)
-y_low = np.array(converted_sorted_vel_low)
-y_high = np.array(converted_sorted_vel_high)
+y_error = np.array(converted_sorted_vel_error)
 
 # Define the linear model with scripy ODR
 def linear_func(B, x):
     return B[0] * x + B[1]
 
-data = Data(x, y) #, wd=1/np.array(distances_error))
+data = Data(x, y, wd=1/np.array(x_error))
 model = Model(linear_func)
 
 # run fitting
@@ -220,7 +205,7 @@ fit_high = (H0+H0_err) * np.array(x) + intercept
 ax.plot(x, fit_linear_regression, color='red')
 
 residuals = y - fit_linear_regression
-weighted_residuals = residuals / converted_sorted_average_dis_low
+weighted_residuals = residuals / converted_sorted_average_dis_error
 mse = np.sum(weighted_residuals ** 2) / (len(x) - 2)
 variance = np.sum((x - np.mean(x)) ** 2)
 std_error_slope = np.sqrt(mse / variance)
@@ -255,8 +240,8 @@ ax.set_xlabel('Distances [Mpc]')
 ax.set_ylabel('Velocities [km/s]')
 ax.grid(True)
 
-ax.errorbar(converted_sorted_average_dis_data, converted_sorted_vel_data, yerr=[converted_sorted_vel_low, converted_sorted_vel_high], fmt='none', color='gray', capsize=5)
-ax.errorbar(converted_sorted_average_dis_data, converted_sorted_vel_data, xerr=[converted_sorted_average_dis_low, converted_sorted_average_dis_high], fmt='none', color='gray', capsize=5)
+ax.errorbar(converted_sorted_average_dis_data, converted_sorted_vel_data, yerr=converted_sorted_vel_error, fmt='none', color='gray', capsize=5)
+ax.errorbar(converted_sorted_average_dis_data, converted_sorted_vel_data, xerr=converted_sorted_average_dis_error, fmt='none', color='gray', capsize=5)
 
 ax.plot(x, fit_linear_regression, color='red')
 
