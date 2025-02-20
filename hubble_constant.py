@@ -217,7 +217,7 @@ std_error_slope = np.sqrt(mse / variance)
 xmin, xmax = plt.xlim()
 ymin, ymax = plt.ylim()
 
-plt.text(xmax * 0.95, ymax * 0.98, fontsize=20, ha='right', va='top')
+# plt.text(xmax * 0.95, ymax * 0.98, fontsize=20, ha='right', va='top')
 
 fig3.savefig('./figures/hubble_diagram.png', dpi=500, bbox_inches='tight')
 
