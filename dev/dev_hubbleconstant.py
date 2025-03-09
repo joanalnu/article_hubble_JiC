@@ -6,7 +6,7 @@ from scipy.odr import ODR, Model, Data
 
 # reading data
 # redshift
-path_redshift = '../redshift_data/00_redshift.xlsx'
+path_redshift = './redshift_data/00_redshift.xlsx'
 xw.Book(path_redshift).set_mock_caller()
 wb = xw.Book.caller()
 sheet = wb.sheets[0]
@@ -41,11 +41,11 @@ ax[1].set_title("Galaxy velocity")
 ax[1].grid(True)
 ax[1].errorbar(velocities_id, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
 
-fig1.savefig('.figs/velocities.png', dpi=600)
+fig1.savefig('./dev/figs/velocities.png', dpi=600)
 
 # distances
 v_gal_id, v_data, v_error = [], [], []
-with open('../cepheid_data/00_V_distances.txt', 'r') as f:
+with open('./cepheid_data/00_V_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
@@ -57,7 +57,7 @@ for line in lines:
         v_error.append(error)
 
 i_gal_id, i_data, i_error = [], [], []
-with open ('../cepheid_data/00_I_distances.txt', 'r') as f:
+with open ('./cepheid_data/00_I_distances.txt', 'r') as f:
     lines = f.readlines()
 
 for line in lines:
@@ -86,7 +86,7 @@ ax[1].set_title("Galaxy distances I")
 ax[1].grid(True)
 ax[1].errorbar(i_gal_id, i_data, yerr=i_error, fmt='none', color='gray', capsize=5)
 
-fig2.savefig('.figs/distances.png', dpi=600)
+fig2.savefig('./dev/figs/distances.png', dpi=600)
 
 
 # computing the Hubble constant
@@ -176,7 +176,7 @@ std_devf2 = np.std(residuals_f2)
 print(f'sigma f1: {std_devf1}')
 print(f'sigma f2: {std_devf2}')
 
-fig3.savefig('.figs/hubblediagram.png', dpi=600)
+fig3.savefig('./dev/figs/hubblediagram.png', dpi=600)
 
 
 
