@@ -179,6 +179,34 @@ print(f'sigma f2: {std_devf2}')
 fig3.savefig('./dev/figs/hubblediagram.png', dpi=600)
 
 
+##### figure für BLL
+bll, ax = plt.subplots(1, 1)
+
+ax.scatter(v_data, velocities_data, color='blue')
+ax.scatter(i_data, velocities_data, color='green')
+
+ax.errorbar(v_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=3)
+ax.errorbar(v_data, velocities_data, xerr=v_error, fmt='none', color='gray', capsize=3)
+
+ax.errorbar(i_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=3)
+ax.errorbar(i_data, velocities_data, yerr=i_error, fmt='none', color='gray', capsize=3)
+
+ax.plot(distances, fit_f2, color='r')
+ax.fill_between(distances, fit_l2, fit_h2, color='orange', alpha=0.2)
+
+ax.set_title("Cepheid Hubble Diagram")
+ax.set_xlabel("Distances [$Mpc$]")
+ax.set_ylabel("Velocities [$km s^{-1}$]")
+
+bll.tight_layout()
+bll.savefig('./dev/figs/cepheid_hubble_diagram.png', dpi=600)
+
+
+
+
+
+
+
 
 # Hubble constant with inverse polyfit
 x = np.array(velocities_data)
