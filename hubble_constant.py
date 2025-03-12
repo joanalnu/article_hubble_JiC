@@ -41,7 +41,7 @@ ax[1].set_title("Galaxy velocity")
 ax[1].grid(True)
 ax[1].errorbar(velocities_id, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
 
-fig1.savefig('./dev/figs/velocities.png', dpi=600)
+fig1.savefig('./figs/velocities.png', dpi=600)
 
 # distances
 v_gal_id, v_data, v_error = [], [], []
@@ -86,7 +86,7 @@ ax[1].set_title("Galaxy distances I")
 ax[1].grid(True)
 ax[1].errorbar(i_gal_id, i_data, yerr=i_error, fmt='none', color='gray', capsize=5)
 
-fig2.savefig('./dev/figs/distances.png', dpi=600)
+fig2.savefig('./figs/distances.png', dpi=600)
 
 
 # computing the Hubble constant
@@ -153,7 +153,7 @@ plt.xlabel("$d$ in $Mpc$")
 plt.ylabel("$v$ in $km s^{-1}$")
 plt.tight_layout()
 plt.grid('True')
-fig3.savefig('./dev/figs/hubblediagram.png', dpi=600)
+fig3.savefig('./figs/hubblediagram.png', dpi=600)
 
 
 
