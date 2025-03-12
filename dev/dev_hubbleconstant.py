@@ -100,17 +100,20 @@ v_error = [data/1000000 for data in v_error]
 i_data = [data/1000000 for data in i_data]
 i_error = [data/1000000 for data in i_error]
 
-fig3, ax = plt.subplots(2, 1, figsize=(8, 10), gridspec_kw={'height_ratios': [3, 1]})
 
-ax[0].scatter(v_data, velocities_data, color='blue')
-ax[0].scatter(i_data, velocities_data, color='green')
+# starting figure
+fig3, ax = plt.subplots(1, 1, figsize=(8, 10))
 
-ax[0].errorbar(v_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
-ax[0].errorbar(v_data, velocities_data, xerr=v_error, fmt='none', color='gray', capsize=5)
+ax.scatter(v_data, velocities_data, color='blue')
+ax.scatter(i_data, velocities_data, color='green')
 
-ax[0].errorbar(i_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
-ax[0].errorbar(i_data, velocities_data, yerr=i_error, fmt='none', color='gray', capsize=5)
+ax.errorbar(v_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
+ax.errorbar(v_data, velocities_data, xerr=v_error, fmt='none', color='gray', capsize=5)
 
+ax.errorbar(i_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=5)
+ax.errorbar(i_data, velocities_data, yerr=i_error, fmt='none', color='gray', capsize=5)
+
+# computing mean for both filters
 distances = list()
 distances_error = list()
 for i in range(len(v_data)):
@@ -121,9 +124,10 @@ for i in range(len(v_data)):
 # Define the linear model
 def linear_func(B, x):
     return B[0] * x + B[1]  # B[0] = slope, B[1] = intercept
-
-data = Data(distances, velocities_data, wd=1/np.array(distances_error)**2)
 model = Model(linear_func)
+
+# taking into account distance errorbars
+data = Data(distances, velocities_data)
 
 # Run fitting model
 odr = ODR(data, model, beta0=[1, 0])  # Initial guess: slope=1, intercept=0
@@ -135,88 +139,36 @@ H0_err = output.sd_beta[0]
 intercept = output.beta[1]
 
 # Print results
-print(f'Hubble constant = {H0:.4f} ± {H0_err:.4f}')
+print(f'H0 = {H0:.4f} ± {H0_err:.4f}')
 
 fit_function = H0 * np.array(distances) + intercept
 fit_low = (H0-H0_err) * np.array(distances) + intercept
 fit_high = (H0+H0_err) * np.array(distances) + intercept
 
-# withtout errors
-data = Data(distances, velocities_data)
-odr = ODR(data, model, beta0=[1,0])
-output = odr.run()
+ax.plot(distances, fit_function, color='r')
+ax.fill_between(distances, fit_low, fit_high, color='orange', alpha=0.3)
 
-# extract results
-H0 = output.beta[0]
-H0_err = output.sd_beta[0]
-intercept = output.beta[1]
-
-# Print results
-print(f'Hubble constant = {H0:.4f} ± {H0_err:.4f}')
-
-fit_f2 = H0 * np.array(distances) + intercept
-fit_l2 = (H0-H0_err) * np.array(distances) + intercept
-fit_h2 = (H0+H0_err) * np.array(distances) + intercept
-
-ax[0].plot(distances, fit_function)
-ax[0].fill_between(distances, fit_low, fit_high, color='yellow', alpha=0.4)
-
-ax[0].plot(distances, fit_f2)
-ax[0].fill_between(distances, fit_l2, fit_h2, color='red', alpha=0.4)
-
-# compute residuals
-residuals_f1 = fit_function - np.array(velocities_data)
-residuals_f2 = fit_f2 - np.array(velocities_data)
-
-ax[1].hlines(0, 0, 40, color="pink", linestyle='--')
-ax[1].errorbar(distances, residuals_f2, yerr=velocities_error, fmt='o', color='blue')
-
-std_devf1 = np.std(residuals_f1)
-std_devf2 = np.std(residuals_f2)
-print(f'sigma f1: {std_devf1}')
-print(f'sigma f2: {std_devf2}')
-
+plt.title("Hubble Diagram")
+plt.xlabel("$d$ in $Mpc$")
+plt.ylabel("$v$ in $km s^{-1}$")
+plt.tight_layout()
+plt.grid('True')
 fig3.savefig('./dev/figs/hubblediagram.png', dpi=600)
-
-
-##### figure für BLL
-bll, ax = plt.subplots(1, 1)
-
-ax.scatter(v_data, velocities_data, color='blue')
-ax.scatter(i_data, velocities_data, color='green')
-
-ax.errorbar(v_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=3)
-ax.errorbar(v_data, velocities_data, xerr=v_error, fmt='none', color='gray', capsize=3)
-
-ax.errorbar(i_data, velocities_data, yerr=velocities_error, fmt='none', color='gray', capsize=3)
-ax.errorbar(i_data, velocities_data, yerr=i_error, fmt='none', color='gray', capsize=3)
-
-ax.plot(distances, fit_f2, color='r')
-ax.fill_between(distances, fit_l2, fit_h2, color='orange', alpha=0.2)
-
-ax.set_title("Cepheid Hubble Diagram")
-ax.set_xlabel("Distances [$Mpc$]")
-ax.set_ylabel("Velocities [$km s^{-1}$]")
-
-bll.tight_layout()
-bll.savefig('./dev/figs/cepheid_hubble_diagram.png', dpi=600)
-
-
-
-
 
 
 
 
 # Hubble constant with inverse polyfit
-x = np.array(velocities_data)
-y = np.array(distances)
+# This confirms the axis-bias in using the `np.polyfit()` function.
 
-slope, intercept = np.polyfit(x, y, 1)
-fit_linear_regression = (1/slope) * x + intercept
-residuals = x - fit_linear_regression
-weighted_residuals = residuals / np.array(distances_error)
-mse = np.sum(weighted_residuals ** 2) / (len(x) - 2)
-variance = np.sum((x - np.mean(x)) ** 2)
-std_error_slope = np.sqrt(mse / variance)
-print(f'Hubble Constant: {1/slope} ± {std_error_slope}')
+# x = np.array(velocities_data)
+# y = np.array(distances)
+#
+# slope, intercept = np.polyfit(x, y, 1)
+# fit_linear_regression = (1/slope) * x + intercept
+# residuals = x - fit_linear_regression
+# weighted_residuals = residuals / np.array(distances_error)
+# mse = np.sum(weighted_residuals ** 2) / (len(x) - 2)
+# variance = np.sum((x - np.mean(x)) ** 2)
+# std_error_slope = np.sqrt(mse / variance)
+# print(f'Hubble Constant: {1/slope} ± {std_error_slope}')
